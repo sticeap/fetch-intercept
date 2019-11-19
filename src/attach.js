@@ -12,7 +12,7 @@ function interceptor(fetch, ...args) {
   // Register request interceptors
   reversedInterceptors.forEach(({ request, requestError }) => {
     if (request || requestError) {
-      promise = promise.then(args => request(...args), requestError);
+      promise = promise.then(args => request(...args)).catch(requestError);
     }
   });
 
@@ -22,7 +22,7 @@ function interceptor(fetch, ...args) {
   // Register response interceptors
   reversedInterceptors.forEach(({ response, responseError }) => {
     if (response || responseError) {
-      promise = promise.then(response, responseError);
+      promise = promise.then(response).catch(responseError);
     }
   });
 
